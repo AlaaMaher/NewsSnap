@@ -2,7 +2,7 @@ package com.alaa.newssnap.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Red = Color(0xFFF31313) //Primary
+val Red = Color(0xFFA81E1E) //Primary
 val Black = Color(0xFF1C1E21) //Dark Background
 
 val DarkRed = Color(0xFFC30052) //Dark Error
