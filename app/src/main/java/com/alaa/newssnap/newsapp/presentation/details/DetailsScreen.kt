@@ -57,8 +57,7 @@ fun DetailsScreen(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(
                 start = MediumPadding1,
-                end = MediumPadding1,
-                top = MediumPadding1
+                end = MediumPadding1
             )
         ) {
             item {
