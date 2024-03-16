@@ -9,7 +9,9 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import ccom.alaa.newssnap.newsapp.presentation.home.HomeViewModel
+import com.alaa.newssnap.newsapp.domain.model.Article
 import com.alaa.newssnap.newsapp.presentation.authentication.AuthenticationScreen
+import com.alaa.newssnap.newsapp.presentation.details.DetailsScreen
 import com.alaa.newssnap.newsapp.presentation.home.HomeScreen
 
 @Composable
@@ -36,13 +38,19 @@ fun NavGraph(
                 HomeScreen(
                     topHeadlines = topHeadlines,
                     articles = articles,
-                    navigateToDetails = {
+                    navigateToDetails = {article ->
+                        navigateToDetails(navController, article)
                     })
 
             }
 
             composable(route = Route.DetailsScreen.route) {
-
+                navController.previousBackStackEntry?.savedStateHandle?.get<Article?>("article")
+                    ?.let { article ->
+                        DetailsScreen(
+                            article = article,
+                            navigateUp = { navController.navigateUp() })
+                    }
             }
 
         }
@@ -53,6 +61,13 @@ fun NavGraph(
 private fun navigateToNewsScreen(navController: NavController) {
     navController.navigate(
         route = Route.NewsNavigatorScreen.route
+    )
+}
+
+private fun navigateToDetails(navController: NavController, article: Article) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("article", article)
+    navController.navigate(
+        route = Route.DetailsScreen.route
     )
 }
 
