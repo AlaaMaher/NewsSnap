@@ -1,12 +1,16 @@
 package com.alaa.newssnap.newsapp.presentation.navgraph
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import ccom.alaa.newssnap.newsapp.presentation.home.HomeViewModel
 import com.alaa.newssnap.newsapp.presentation.authentication.AuthenticationScreen
+import com.alaa.newssnap.newsapp.presentation.home.HomeScreen
 
 @Composable
 fun NavGraph(
@@ -25,6 +29,15 @@ fun NavGraph(
             }
 
             composable(route = Route.NewsNavigatorScreen.route) {
+                val viewModel: HomeViewModel = hiltViewModel()
+                val topHeadlines = viewModel.topHeadlines.collectAsLazyPagingItems()
+
+                val articles = viewModel.news.collectAsLazyPagingItems()
+                HomeScreen(
+                    topHeadlines = topHeadlines,
+                    articles = articles,
+                    navigateToDetails = {
+                    })
 
             }
 

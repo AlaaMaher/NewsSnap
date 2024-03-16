@@ -16,11 +16,15 @@ import androidx.fragment.app.FragmentActivity
 import com.alaa.newssnap.newsapp.presentation.navgraph.NavGraph
 import com.alaa.newssnap.ui.theme.NewsSnapTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity :  FragmentActivity() {
     val viewModel by viewModels<MainVM>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         installSplashScreen().apply {
             setKeepOnScreenCondition{

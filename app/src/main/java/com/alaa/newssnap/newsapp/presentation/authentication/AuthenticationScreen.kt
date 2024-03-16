@@ -27,8 +27,6 @@ import androidx.fragment.app.FragmentActivity
 import com.alaa.newssnap.R
 import com.alaa.newssnap.newsapp.domain.authenticator.BiometricAuthenticator
 import com.alaa.newssnap.newsapp.presentation.common.NewsButton
-import com.alaa.newssnap.newsapp.presentation.navgraph.NavGraph
-import com.alaa.newssnap.newsapp.presentation.navgraph.Route
 import com.alaa.newssnap.util.Dimens.ExtraSmallPadding2
 import com.alaa.newssnap.util.Dimens.MediumPadding2
 
