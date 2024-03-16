@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,17 +23,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import com.alaa.newssnap.R
 import com.alaa.newssnap.newsapp.domain.authenticator.BiometricAuthenticator
 import com.alaa.newssnap.newsapp.presentation.common.NewsButton
 import com.alaa.newssnap.util.Dimens.ExtraSmallPadding2
-import com.alaa.newssnap.util.Dimens.MediumPadding1
 import com.alaa.newssnap.util.Dimens.MediumPadding2
 
 @Composable
-fun AuthenticationScreen(modifier: Modifier = Modifier) {
+fun AuthenticationScreen(modifier: Modifier = Modifier, navigateToHomeScreen: () -> Unit) {
+
 
     var message by remember {
         mutableStateOf("")
@@ -43,56 +40,62 @@ fun AuthenticationScreen(modifier: Modifier = Modifier) {
     val fragmentActivity = LocalContext.current as FragmentActivity
     val biometricAuthenticator = BiometricAuthenticator(fragmentActivity)
 
-Box {
-    Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
-        Image(
-            modifier = Modifier.padding(vertical = ExtraSmallPadding2)
-                .fillMaxWidth()
-                .fillMaxHeight(0.5f),
-            painter = painterResource(R.drawable.ic_news_display), contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
+    Box {
+        Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
+            Image(
+                modifier = Modifier
+                    .padding(vertical = ExtraSmallPadding2)
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.5f),
+                painter = painterResource(R.drawable.ic_news_display), contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
 
 
-        Text(
-            text = "Stay Informed with Our News Onboarding Experience!",
-            modifier = Modifier.padding(horizontal = MediumPadding2),
-            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-            color = colorResource(id = R.color.display_small)
-        )
+            Text(
+                text = "Stay Informed with Our News Onboarding Experience!",
+                modifier = Modifier.padding(horizontal = MediumPadding2),
+                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+                color = colorResource(id = R.color.display_small)
+            )
 
-        Text(
-            text = "Welcome to our news app! Get started by personalizing your news feed.",
-            modifier = Modifier.padding(horizontal = MediumPadding2),
-            style = MaterialTheme.typography.bodyMedium,
-            color = colorResource(id = R.color.text_medium)
-        )
-        Spacer(modifier = Modifier.height(MediumPadding2))
+            Text(
+                text = "Welcome to our news app! Get started by personalizing your news feed.",
+                modifier = Modifier.padding(horizontal = MediumPadding2),
+                style = MaterialTheme.typography.bodyMedium,
+                color = colorResource(id = R.color.text_medium)
+            )
+            Spacer(modifier = Modifier.height(MediumPadding2))
 
 
-        NewsButton(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "Login With Fingerprint"
-        ) {
-            biometricAuthenticator.promptBiometricAuth(
-                title = "Login",
-                subtitle = "Use Your Fingerprint",
-                cancelBtnText = "Cancel",
-                fragmentActivity = fragmentActivity,
-                onSuccess = {
-                    message = " Success"
-                },
-                onFailed = {
-                    message = "Wrong Fingerprint"
-                },
-                onError = { _, error ->
-                    message = error
-                })
+            NewsButton(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "Login With Fingerprint"
+            ) {
+                biometricAuthenticator.promptBiometricAuth(
+                    title = "Login",
+                    subtitle = "Use Your Fingerprint",
+                    cancelBtnText = "Cancel",
+                    fragmentActivity = fragmentActivity,
+                    onSuccess = {
+                                navigateToHomeScreen()
+
+                    },
+                    onFailed = {
+                        message = "Failed"
+                    },
+                    onError = { _, error ->
+                        message = error
+                    })
+            }
+            Spacer(modifier = Modifier.height(MediumPadding2))
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                color = MaterialTheme.colorScheme.error,
+                text = message.toString()
+            )
+
+
         }
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(text = message)
-
-
     }
-}
 }
